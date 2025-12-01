@@ -67,30 +67,20 @@ class _HomePageScreenState extends State<HomePageScreen> {
               padding: const EdgeInsets.all(16.0),
               child: _buildBalanceAndSummary(primaryColor, textTheme), // Panggil fungsi baru
             ),
-            // -----------------------------------------------------------
-
-            // Section "Saving"
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text('Saving', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             const SizedBox(height: 10),
-            // Wrapper Row untuk Saving Cards
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: _buildSavingCards(),
-            ),
-            
-            // Section "Transactions"
+            ), 
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
               child: Text('Transactions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
-            
-            // Transaction List
             _buildTransactionList(),
-            
-            // Tambahkan sedikit ruang di bawah transaksi agar tidak terlalu mepet BottomNavigationBar
             const SizedBox(height: 10), 
           ],
         ),
@@ -98,14 +88,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
       bottomNavigationBar: _buildBottomNavBar(primaryColor),
     );
   }
-
-  // 💡 FUNGSI BARU: Widget untuk Saldo dan Ringkasan Keuangan di body (mengatasi overflow AppBar)
   Widget _buildBalanceAndSummary(Color primaryColor, TextTheme textTheme) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: primaryColor,
-        borderRadius: BorderRadius.circular(15), // Membuat sudut melengkung
+        borderRadius: BorderRadius.circular(15), 
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +110,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   _isBalanceHidden ? Icons.visibility_off : Icons.visibility,
                   color: Colors.white70,
                 ),
-                onPressed: _toggleBalanceVisibility, // Mengubah state
+                onPressed: _toggleBalanceVisibility, 
               ),
             ],
           ),
@@ -131,7 +119,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
             style: textTheme.titleLarge,
           ),
           const SizedBox(height: 20),
-          // Ringkasan Income dan Spendings
           Row(
             children: [
               _buildFinancialSummary('Income', _user.income, Colors.greenAccent),
@@ -143,8 +130,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
     );
   }
-
-  // Widget untuk menampilkan ringkasan Income/Spendings
   Widget _buildFinancialSummary(String title, double amount, Color color) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +141,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         Text(
           title == 'Income'
               ? '+\$${amount.toStringAsFixed(2)}'
-              : '-\$${(amount).abs().toStringAsFixed(2)}', // Menggunakan .abs() untuk memastikan angka Spendings positif sebelum di-minus
+              : '-\$${(amount).abs().toStringAsFixed(2)}',
           style: TextStyle(
             color: color,
             fontWeight: FontWeight.bold,
@@ -166,14 +151,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ],
     );
   }
-
-  // Widget untuk Saving Cards
   Widget _buildSavingCards() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          // Kartu 1: Housing
           _buildSavingCard(
             icon: Icons.home,
             title: 'Housing',
@@ -182,7 +164,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
             color: const Color(0xFF00ACC1),
           ),
           const SizedBox(width: 10),
-          // Kartu 2: Food
           _buildSavingCard(
             icon: Icons.fastfood,
             title: 'Food',
@@ -207,8 +188,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
     );
   }
-
-  // Template untuk Saving Card
   Widget _buildSavingCard({
     required IconData icon,
     required String title,
@@ -251,8 +230,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
     );
   }
-
-  // Widget untuk Daftar Transaksi
   Widget _buildTransactionList() {
     const transactions = [
       {'title': 'Shopping', 'amount': -211.00, 'date': 'Jun 11, 12:23', 'icon': Icons.shopping_bag, 'color': Colors.red},
@@ -269,7 +246,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ),
           title: Text(tx['title'].toString(), style: const TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text(tx['date'].toString()),
-          // Di dalam _buildTransactionList()...
 trailing: Text(
   // 💡 PERBAIKAN UTAMA: Cast tx['amount'] sebagai double
   (tx['amount'] as double)! > 0 
@@ -285,7 +261,6 @@ trailing: Text(
     );
   }
 
-  // Widget untuk Bottom Navigation Bar (Responsive/Tidak Overflow)
   Widget _buildBottomNavBar(Color primaryColor) {
     return BottomNavigationBar(
       selectedItemColor: primaryColor,
